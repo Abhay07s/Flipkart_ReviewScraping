@@ -8,13 +8,14 @@ from selenium import webdriver
 import pymongo
 
 app = Flask(__name__)
-CORS(app)
-
+    
 @app.route("/", methods=['GET'])
+@cross_origin()
 def homepage():
     return render_template("index.html")
 
 @app.route("/review", methods=['POST', 'GET'])
+@cross_origin()
 def index():
     try:
         if request.method == 'POST':
