@@ -17,8 +17,8 @@ def homepage():
 @app.route("/review", methods=['POST', 'GET'])
 @cross_origin()
 def index():
-    try:
-        if request.method == 'POST':
+    if request.method == 'POST':
+        try:
             DRIVER_PATH = r"D:\python\chromedriver.exe"
             chrome_options = webdriver.ChromeOptions()
             driver = webdriver.Chrome(options=chrome_options)
@@ -34,7 +34,6 @@ def index():
             prodRes = requests.get(productLink)
             prodRes.encoding = 'utf-8'
             prod_html = bs(prodRes.text, "html.parser")
-            print(prod_html)
             commentboxes = prod_html.find_all('div', {'class': "_16PBlm"})
             driver.quit()
             filename = searchString + ".csv"
@@ -71,10 +70,10 @@ def index():
             coll_webscriping.insert_many(reviews)
             return render_template('result.html', reviews=reviews[0:(len(reviews) - 1)])
 
-    except Exception as e:
-        print("Exception while creating dictionary: ",e)
-        print(f"An error occurred: {str(e)}")
-        return 'something is wrong'
-
+        except Exception as e:
+            print('The Exception message is: ',e)
+            return 'something is wrong'
+    else:
+       return render_template('index.html')
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
