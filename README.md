@@ -14,6 +14,7 @@
 * requests
 * Selenium
 * pandas
+* pymongo
 
 ## Features
 * Scrape product data from Flipkart search results.
